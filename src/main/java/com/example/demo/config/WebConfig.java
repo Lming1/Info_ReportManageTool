@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 
 @Configuration
 @EnableWebMvc
@@ -17,6 +18,7 @@ public class WebConfig  {
         BeanNameViewResolver resolver = new BeanNameViewResolver();
         return resolver;
     }
+
 
     @Bean
     public ViewResolver jspViewResolver() {

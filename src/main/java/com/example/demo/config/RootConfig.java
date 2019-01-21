@@ -50,10 +50,6 @@ public class RootConfig {
         return dataSource;
     }
 
-//    @Bean
-//    public PlatformTransactionManager txManager() {
-//        return new DataSourceTransactionManager(dataSource());
-//    }
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
