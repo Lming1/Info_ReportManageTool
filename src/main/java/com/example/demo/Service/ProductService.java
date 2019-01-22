@@ -1,10 +1,13 @@
-package com.example.demo;
+package com.example.demo.Service;
 
+import com.example.demo.Model.Product;
+import com.example.demo.Repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -37,4 +40,5 @@ public class ProductService {
     public List<Product> getByCategory() {
         return productRepository.findAllByCategoryCode(1);
     }
+
 }

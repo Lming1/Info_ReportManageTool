@@ -11,6 +11,6 @@
     <title>Jasper Report Test site</title>
   </head>
   <body>
-  <a href="/product">product</a>
+  <a href="/report">report</a>
   </body>
 </html>
