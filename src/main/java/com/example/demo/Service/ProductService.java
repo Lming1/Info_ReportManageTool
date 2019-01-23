@@ -17,12 +17,7 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public Optional<Product> get() {
-        return productRepository.findById(1);
-    }
-
-
-    public List<Map<String, Object>> report() {
+    public List<Map<String, Object>> productFindAll() {
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         for (Product product : productRepository.findAll()) {
             Map<String, Object> item = new HashMap<String, Object>();
@@ -36,9 +31,5 @@ public class ProductService {
         return result;
     }
 
-
-    public List<Product> getByCategory() {
-        return productRepository.findAllByCategoryCode(1);
-    }
 
 }

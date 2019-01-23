@@ -12,10 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +32,7 @@ public class ReportService {
     private final ProductService productService;
 
     public void exportReportToHtml(HttpServletResponse response, String inputFileName) throws Exception {
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(productService.report());
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(productService.productFindAll());
         InputStream inputStream = this.getClass().getResourceAsStream("/reports/" + inputFileName +".jrxml");
         try {
             response.setContentType("text/html");
@@ -51,7 +55,7 @@ public class ReportService {
 //        Map<String, Object> parameters = new HashMap<String, Object>();
 //        parameters.put("ReportTitle", "Product");
 //        parameters.put("Author", "Infomind");
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(productService.report());
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(productService.productFindAll());
         InputStream inputStream = this.getClass().getResourceAsStream("/reports/" + inputFileName +".jrxml");
         try {
             log.info("***infomind*** Start Compiling!!!!");
