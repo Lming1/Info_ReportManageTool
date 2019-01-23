@@ -21,7 +21,6 @@ import java.io.InputStream;
 @Controller
 @Slf4j
 
-//TODO 리펙토링(ProductController -> ReportService, Controller)
 public class ProductController {
     private final ProductService productService;
 
