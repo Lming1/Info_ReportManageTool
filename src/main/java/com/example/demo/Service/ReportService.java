@@ -46,9 +46,6 @@ public class ReportService {
     }
 
 
-
-
-
     public void exportReportToPdf(HttpServletResponse response, String inputFileName) throws Exception{
         log.info("****************generate PDF report****************");
 //        Map<String, Object> parameters = new HashMap<String, Object>();
