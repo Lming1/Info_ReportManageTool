@@ -47,4 +47,10 @@ public class ReportController {
         reportService.exportReportToPdf(response, "SampleReport", dataSource);
     }
 
+    @GetMapping("/test")
+    public void testReport(HttpServletResponse response) throws Exception {
+        dataSource = getDataSource(productService.productTest());
+        reportService.exportReportToPdf(response, "SampleReport", dataSource);
+    }
+
 }

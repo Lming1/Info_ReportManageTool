@@ -17,6 +17,8 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    //TODO 이거 바꿀 방법만 찾으면 끝날 듯.. 모델을 사용자가 임의로 잡는 방법은 없나..
+
     public List<Map<String, Object>> productFindAll() {
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         for (Product product : productRepository.findAll()) {
@@ -29,6 +31,10 @@ public class ProductService {
             result.add(item);
         }
         return result;
+    }
+
+    public Collection<Product> productTest() {
+        return null;
     }
 
 
