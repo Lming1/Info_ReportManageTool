@@ -8,22 +8,12 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.HtmlExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -31,8 +21,8 @@ import java.util.Map;
 public class ReportService {
     private final ProductService productService;
 
-    public void exportReportToHtml(HttpServletResponse response, String inputFileName) throws Exception {
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(productService.productFindAll());
+
+    public void exportReportToHtml(HttpServletResponse response, String inputFileName, JRBeanCollectionDataSource dataSource) throws Exception {
         InputStream inputStream = this.getClass().getResourceAsStream("/reports/" + inputFileName +".jrxml");
         try {
             response.setContentType("text/html");
@@ -50,12 +40,10 @@ public class ReportService {
     }
 
 
-    public void exportReportToPdf(HttpServletResponse response, String inputFileName) throws Exception{
+    public void exportReportToPdf(HttpServletResponse response, String inputFileName, JRBeanCollectionDataSource dataSource) throws Exception{
         log.info("****************generate PDF report****************");
-//        Map<String, Object> parameters = new HashMap<String, Object>();
-//        parameters.put("ReportTitle", "Product");
-//        parameters.put("Author", "Infomind");
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(productService.productFindAll());
+        //TODO Jasper 엔진에 넘겨주는 방식을 따로 뺄 순 없는가..
+
         InputStream inputStream = this.getClass().getResourceAsStream("/reports/" + inputFileName +".jrxml");
         try {
             log.info("***infomind*** Start Compiling!!!!");
@@ -83,5 +71,9 @@ public class ReportService {
             log.info("******* Servlet Output Stream Close *******");
             response.getOutputStream().close();
         }
+    }
+
+    public static JRBeanCollectionDataSource getDataSource(Collection dataSource) {
+        return new JRBeanCollectionDataSource(dataSource);
     }
 }
