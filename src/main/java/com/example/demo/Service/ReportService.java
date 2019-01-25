@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collection;
 
 @Slf4j
@@ -52,31 +53,29 @@ public class ReportService {
 
     public void exportReportToPdf(HttpServletResponse response, String inputFileName, JRBeanCollectionDataSource dataSource) throws Exception{
         log.info("****************generate PDF report****************");
+        //TODO Jasper 엔진에 넘겨주는 방식을 따로 뺄 순 없는가..
+        InputStream inputStream = this.getClass().getResourceAsStream("/reports/" + inputFileName +".jrxml");
+        OutputStream outputStream = response.getOutputStream();
         try {
             log.info("***infomind*** Start Compiling!!!!");
-            JasperReport jasperReport = compileReport(inputFileName);
+            JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
             log.info("***infomind*** Done compiling!!! ...");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,
                     null, dataSource);
-            log.info("***infomind*** Jasper print...... !!! ...");
             if (jasperPrint != null) {
                 byte[] pdfReport = JasperExportManager
                         .exportReportToPdf(jasperPrint);
-                response.reset();
-                response.setContentType("application/pdf");
-                response.setHeader("Cache-Control", "no-store");
-                response.setHeader("Cache-Control", "private");
-                response.setHeader("Pragma", "no-store");
-                response.setContentLength(pdfReport.length);
-                response.getOutputStream().write(pdfReport);
-                response.getOutputStream().flush();
-                log.info("***infomind*** Export Report :)");
+                outputStream.write(pdfReport);
+                outputStream.flush();
             }
         } catch (JRException | IOException e) {
             e.printStackTrace();
         } finally {
-            log.info("******* OutputStream Close *******");
-            response.getOutputStream().close();
+            log.info("******* inputStream Close *******");
+            inputStream.close();
+            log.info("******* Servlet Output Stream Close *******");
+            outputStream.close();
+        }
         }
     }
 
