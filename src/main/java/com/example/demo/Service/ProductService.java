@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -33,8 +34,9 @@ public class ProductService {
         return result;
     }
 
-    public Collection<Product> productTest() {
-        return null;
+    public Collection productTest() {
+        Collection result = productRepository.findAll();
+        return result;
     }
 
 
